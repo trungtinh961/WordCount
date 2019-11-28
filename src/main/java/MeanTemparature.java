@@ -15,10 +15,14 @@ public class MeanTemparature {
         public void map(Object key, Text value,Context context) throws IOException, InterruptedException{
             String line = value.toString();
             String[] elements = line.split(",");
-            int month=Integer.parseInt(elements[1].substring(4,6));
-            Text data=new Text(elements[3]);
-            context.write(new IntWritable(month), data);
+            int monthyear = Integer.parseInt(elements[0].substring(2,8));
+            Text data = new Text(elements[2]);
+            context.write(new IntWritable(monthyear), data);
         }
+    }
+
+    public  static  class Mycombiner extends Reducer<IntWritable,Text,IntWritable,IntWritable> {
+
     }
 
     public static class Myreducer extends  Reducer<IntWritable,Text,IntWritable,IntWritable> {
